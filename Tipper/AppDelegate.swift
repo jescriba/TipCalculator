@@ -17,16 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let defaults = UserDefaults.standard
-        let lastDate = defaults.object(forKey: "LastLaunchDate") as? TimeInterval
-        if (lastDate != nil) {
-            let currentTime = NSDate.timeIntervalSinceReferenceDate
-            // Reset bill amount if too much time has elasped
-            if lastDate! < (currentTime + 10 * 60.0) {
-                defaults.removeObject(forKey: "BillAmount")
-            }
-        }
-        defaults.set(NSDate.timeIntervalSinceReferenceDate, forKey: "LastLaunchDate")
+        checkLaunchDate(application)
         return true
     }
 
@@ -42,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        checkLaunchDate(application)
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -50,6 +42,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func checkLaunchDate(_ application: UIApplication) {
+        let defaults = UserDefaults.standard
+        let lastDate = defaults.object(forKey: "LastLaunchDate") as? TimeInterval
+        if (lastDate != nil) {
+            let currentTime = NSDate.timeIntervalSinceReferenceDate
+            // Reset bill amount if too much time has elasped
+            // at 10 minutes currently
+            if lastDate!.distance(to: currentTime) > 60 * 10.0 {
+                defaults.removeObject(forKey: "BillAmount")
+                let vc = application.keyWindow?.rootViewController?.childViewControllers[0] as? TipViewController
+                let currencySymbol = Locale.current.currencySymbol ?? "$"
+                vc?.billField.text = ""
+                vc?.tipLabel.text = "\(currencySymbol)0.00"
+                vc?.totalLabel.text = "\(currencySymbol)0.00"
+                vc?.billField.becomeFirstResponder()
+            }
+        }
+        defaults.set(NSDate.timeIntervalSinceReferenceDate, forKey: "LastLaunchDate")
+        defaults.synchronize()
     }
 
 

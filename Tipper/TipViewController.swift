@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class TipViewController: UIViewController {
     let currencySymbol = Locale.current.currencySymbol ?? "$"
 
     @IBOutlet weak var billField: UITextField!
