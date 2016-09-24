@@ -32,7 +32,10 @@ class TipViewController: UIViewController {
         let defaults = UserDefaults.standard
         if (defaults.object(forKey: "BillAmount") != nil) {
             let billAmount = defaults.double(forKey: "BillAmount")
-            billField.text = String(format: "%.2f", billAmount)
+            // Leave the placeholder if the amount is 0
+            if (billAmount != 0) {
+                billField.text = String(format: "%.2f", billAmount)
+            }
         }
     }
     
