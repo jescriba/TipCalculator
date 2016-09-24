@@ -48,18 +48,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let defaults = UserDefaults.standard
         let lastDate = defaults.object(forKey: "LastLaunchDate") as? TimeInterval
         if (lastDate != nil) {
+            let vc = application.keyWindow?.rootViewController?.childViewControllers[0] as? TipViewController
             let currentTime = NSDate.timeIntervalSinceReferenceDate
             // Reset bill amount if too much time has elasped
             // at 10 minutes currently
             if lastDate!.distance(to: currentTime) > 60 * 10.0 {
                 defaults.removeObject(forKey: "BillAmount")
-                let vc = application.keyWindow?.rootViewController?.childViewControllers[0] as? TipViewController
                 let currencySymbol = Locale.current.currencySymbol ?? "$"
                 vc?.billField.text = ""
                 vc?.tipLabel.text = "\(currencySymbol)0.00"
                 vc?.totalLabel.text = "\(currencySymbol)0.00"
-                vc?.billField.becomeFirstResponder()
             }
+            vc?.billField.becomeFirstResponder()
         }
         defaults.set(NSDate.timeIntervalSinceReferenceDate, forKey: "LastLaunchDate")
         defaults.synchronize()
