@@ -20,12 +20,20 @@ class ViewController: UIViewController {
     @IBOutlet weak var fourFriendsLabel: UILabel!
     @IBOutlet weak var fiveFriendsLabel: UILabel!
     @IBOutlet weak var friendsContainerView: UIView!
+    @IBOutlet var detailLabels: [UILabel]!
+    @IBOutlet weak var detailContainerView: UIView!
+    @IBOutlet weak var dividerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.  
         
         billField.placeholder = currencySymbol
+        let defaults = UserDefaults.standard
+        if (defaults.object(forKey: "BillAmount") != nil) {
+            let billAmount = defaults.double(forKey: "BillAmount")
+            billField.text = String(format: "%.2f", billAmount)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,6 +44,8 @@ class ViewController: UIViewController {
         tipControl.selectedSegmentIndex = tipIndex
         calculateTip(self)
         billField.becomeFirstResponder()
+        
+        setTheme()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -72,6 +82,9 @@ class ViewController: UIViewController {
         let tipPercentages = [0.15, 0.20, 0.25]
         let tip = tipPercentages[tipControl.selectedSegmentIndex] * bill
         let total = bill + tip
+        let defaults = UserDefaults.standard
+        defaults.set(bill, forKey: "BillAmount")
+        defaults.synchronize()
         
         tipLabel.text = String(format: "\(currencySymbol)%.2f", tip)
         totalLabel.text = String(format: "\(currencySymbol)%.2f", total)
@@ -79,6 +92,20 @@ class ViewController: UIViewController {
         threeFriendsLabel.text = String(format: "\(currencySymbol)%.2f", total / 3)
         fourFriendsLabel.text = String(format: "\(currencySymbol)%.2f", total / 4)
         fiveFriendsLabel.text = String(format: "\(currencySymbol)%.2f", total / 5)
+    }
+    
+    func setTheme() {
+        let themeColors = Theme.ThemeColors()
+        view.backgroundColor = themeColors.backgroundColor
+        billField.textColor = themeColors.labelFontColor
+        billField.attributedPlaceholder = NSAttributedString(string: "\(currencySymbol)", attributes: [NSForegroundColorAttributeName: themeColors.labelFontColor])
+        tipControl.tintColor = themeColors.labelFontColor
+        detailContainerView.backgroundColor = themeColors.totalContainerColor
+        friendsContainerView.backgroundColor = themeColors.totalContainerColor
+        dividerView.backgroundColor = themeColors.totalLabelFontColor
+        for label in detailLabels {
+            label.textColor = themeColors.totalLabelFontColor
+        }
     }
 
 }

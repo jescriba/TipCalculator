@@ -16,6 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let defaults = UserDefaults.standard
+        let lastDate = defaults.object(forKey: "LastLaunchDate") as? TimeInterval
+        if (lastDate != nil) {
+            let currentTime = NSDate.timeIntervalSinceReferenceDate
+            // Reset bill amount if too much time has elasped
+            if lastDate! < (currentTime + 10 * 60.0) {
+                defaults.removeObject(forKey: "BillAmount")
+            }
+        }
+        defaults.set(NSDate.timeIntervalSinceReferenceDate, forKey: "LastLaunchDate")
         return true
     }
 

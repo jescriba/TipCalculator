@@ -123,7 +123,7 @@
                                                 <color key="backgroundColor" red="0.34572219617712818" green="0.5" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.589753791617318" green="0.76078431372549016" blue="0.99300020973154357" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.60784313725490191" green="0.76078431372549016" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.60784313725490191" green="0.76078431372549016" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -158,6 +158,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="billField" destination="mjr-2D-Wy6" id="UYA-Me-fIV"/>
+                        <outlet property="detailContainerView" destination="QUd-2M-LKY" id="p9R-AI-ViK"/>
+                        <outlet property="dividerView" destination="cf4-1N-s6A" id="02J-r7-ZCU"/>
                         <outlet property="fiveFriendsLabel" destination="Qza-qF-u1N" id="s1Y-hV-Hi4"/>
                         <outlet property="fourFriendsLabel" destination="vvC-AH-bpN" id="Vfb-TL-Wk1"/>
                         <outlet property="friendsContainerView" destination="OdF-9q-Cdh" id="dVb-89-Heh"/>
@@ -166,6 +168,18 @@
                         <outlet property="tipLabel" destination="BRj-qa-WGk" id="3XI-Vb-5HR"/>
                         <outlet property="totalLabel" destination="Q4f-qy-Buz" id="wfl-D4-3tA"/>
                         <outlet property="twoFriendsLabel" destination="PfT-9m-dRV" id="vq6-ux-eEP"/>
+                        <outletCollection property="detailLabels" destination="LNN-Su-64b" collectionClass="NSMutableArray" id="1Cy-cw-LjS"/>
+                        <outletCollection property="detailLabels" destination="BRj-qa-WGk" collectionClass="NSMutableArray" id="oOy-BT-B3d"/>
+                        <outletCollection property="detailLabels" destination="SVo-l3-Ib8" collectionClass="NSMutableArray" id="3Wh-d1-gu1"/>
+                        <outletCollection property="detailLabels" destination="Q4f-qy-Buz" collectionClass="NSMutableArray" id="ghh-W3-4of"/>
+                        <outletCollection property="detailLabels" destination="yIh-gb-9jx" collectionClass="NSMutableArray" id="M7p-3W-QEc"/>
+                        <outletCollection property="detailLabels" destination="u7N-Eg-Oc2" collectionClass="NSMutableArray" id="qRh-vc-FcS"/>
+                        <outletCollection property="detailLabels" destination="m7X-Gb-fhO" collectionClass="NSMutableArray" id="vVY-by-ghr"/>
+                        <outletCollection property="detailLabels" destination="9eA-KP-Vt2" collectionClass="NSMutableArray" id="0ay-6i-UQe"/>
+                        <outletCollection property="detailLabels" destination="PfT-9m-dRV" collectionClass="NSMutableArray" id="eyH-T5-Ngy"/>
+                        <outletCollection property="detailLabels" destination="Ipb-kl-Gzw" collectionClass="NSMutableArray" id="4j1-BQ-DnD"/>
+                        <outletCollection property="detailLabels" destination="vvC-AH-bpN" collectionClass="NSMutableArray" id="6ac-Vy-j8x"/>
+                        <outletCollection property="detailLabels" destination="Qza-qF-u1N" collectionClass="NSMutableArray" id="GKa-of-Fhf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -231,6 +245,8 @@
                     <connections>
                         <outlet property="themeControl" destination="Wi6-iI-cLX" id="Ndm-qT-atc"/>
                         <outlet property="tipControl" destination="1jr-zU-52c" id="BDp-wB-8s4"/>
+                        <outletCollection property="descriptionLabels" destination="OrK-kR-Mct" collectionClass="NSMutableArray" id="MmX-3E-wFc"/>
+                        <outletCollection property="descriptionLabels" destination="0nk-Se-Gs0" collectionClass="NSMutableArray" id="sqa-sk-oC6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="auf-zD-mMv" userLabel="First Responder" sceneMemberID="firstResponder"/>
