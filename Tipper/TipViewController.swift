@@ -9,15 +9,23 @@
 import UIKit
 
 class ViewController: UIViewController {
+    let currencySymbol = Locale.current.currencySymbol ?? "$"
 
     @IBOutlet weak var billField: UITextField!
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var tipControl: UISegmentedControl!
+    @IBOutlet weak var twoFriendsLabel: UILabel!
+    @IBOutlet weak var threeFriendsLabel: UILabel!
+    @IBOutlet weak var fourFriendsLabel: UILabel!
+    @IBOutlet weak var fiveFriendsLabel: UILabel!
+    @IBOutlet weak var friendsContainerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        // Do any additional setup after loading the view, typically from a nib.  
+        
+        billField.placeholder = currencySymbol
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -26,22 +34,20 @@ class ViewController: UIViewController {
         let defaults = UserDefaults.standard
         let tipIndex = defaults.integer(forKey: "TipSegmentIndex")
         tipControl.selectedSegmentIndex = tipIndex
+        calculateTip(self)
         billField.becomeFirstResponder()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("view did appear")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("view will disappear")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        print("view did disappear")
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -50,6 +56,15 @@ class ViewController: UIViewController {
 
     @IBAction func onTap(_ sender: AnyObject) {
         view.endEditing(true)
+        UIView.animate(withDuration: 1, animations: {
+            self.friendsContainerView.alpha = 1
+        })
+    }
+    
+    @IBAction func beganEditing(_ sender: AnyObject) {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.friendsContainerView.alpha = 0
+        })
     }
     
     @IBAction func calculateTip(_ sender: AnyObject) {
@@ -58,8 +73,12 @@ class ViewController: UIViewController {
         let tip = tipPercentages[tipControl.selectedSegmentIndex] * bill
         let total = bill + tip
         
-        tipLabel.text = String(format: "$%.2f", tip)
-        totalLabel.text = String(format: "$%.2f", total)
+        tipLabel.text = String(format: "\(currencySymbol)%.2f", tip)
+        totalLabel.text = String(format: "\(currencySymbol)%.2f", total)
+        twoFriendsLabel.text = String(format: "\(currencySymbol)%.2f", total / 2)
+        threeFriendsLabel.text = String(format: "\(currencySymbol)%.2f", total / 3)
+        fourFriendsLabel.text = String(format: "\(currencySymbol)%.2f", total / 4)
+        fiveFriendsLabel.text = String(format: "\(currencySymbol)%.2f", total / 5)
     }
 
 }

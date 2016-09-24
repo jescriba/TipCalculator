@@ -10,11 +10,15 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
+    @IBOutlet weak var themeControl: UISegmentedControl!
     @IBOutlet weak var tipControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Set navigation appearance
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(red:0.23, green:0.38, blue:0.74, alpha:1.0)], for: .normal)
+        navigationController?.navigationBar.tintColor = UIColor(red:0.23, green:0.38, blue:0.74, alpha:1.0)
         let defaults = UserDefaults.standard
         let tipIndex = defaults.integer(forKey: "TipSegmentIndex")
         tipControl.selectedSegmentIndex = tipIndex
@@ -25,20 +29,18 @@ class SettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func themeChanged(_ sender: AnyObject) {
+        let defaults = UserDefaults.standard
+        defaults.set(themeControl.selectedSegmentIndex, forKey: "ThemeSegmentIndex")
+        //changeTheme()
+    }
+    
     @IBAction func tipValueChanged(_ sender: AnyObject) {
         let defaults = UserDefaults.standard
         defaults.set(tipControl.selectedSegmentIndex, forKey: "TipSegmentIndex")
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func changeTheme(themeIndex: Int) {
+        
     }
-    */
-
 }
